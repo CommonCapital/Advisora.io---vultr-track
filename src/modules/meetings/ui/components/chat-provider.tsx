@@ -1,7 +1,7 @@
 "use client"
 import LoadingPage from "@/components/LoadingPage";
 import { authClient } from "@/lib/auth-client";
-import { ChartColumnIcon } from "lucide-react";
+
 import { ChatUI } from "./chat-ui";
 
 

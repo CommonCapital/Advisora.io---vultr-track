@@ -5,9 +5,6 @@ import { StreamTranscriptItem } from "@/modules/meetings/types";
 import { eq, inArray } from "drizzle-orm";
 import JSONL from "jsonl-parse-stringify";
 import {createAgent, openai, TextMessage} from "@inngest/agent-kit";
-import { grok } from "inngest";
-
-
 
 const dataReport = createAgent({
     name: "Data Report",
@@ -72,10 +69,7 @@ Metric | Client | Industry Avg
 📬 9. Feedback & Next Meeting
 Feedback: [Short feedback prompt]
 Next Meeting: [Proposed date/time]`.trim(), 
- model : openai({
-    model: "gpt-3.5-turbo",
-    apiKey: process.env.OPEN_AI_API_KEY
- })
+model: openai({ model: "gpt-3.5-turbo", apiKey:process.env.OPEN_AI_API_KEY}),
 });
 
 
