@@ -5,7 +5,7 @@ import { CommandResponsiveDialog } from "@/components/ui/command";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
-import { GeneratdAvatarUri } from "@/lib/avatar";
+
 
 
 interface Props {
