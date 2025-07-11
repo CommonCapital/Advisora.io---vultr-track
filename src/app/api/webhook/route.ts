@@ -86,6 +86,7 @@ const [existingMeeting] = await db.select().from(meetings).where(and(eq(meetings
         call,
         openAiApiKey: process.env.OPEN_AI_API_KEY!,
         agentUserId: existingAgent.id,
+        instructions: existingAgent.instructions,
 
     });
 

@@ -35,7 +35,7 @@ export const AgentsView = () => {
         description="
         Welcome to Advisora.io! 
         Generate your first consulting Agent to get started. 
-        Each Agent will follow your specific requirments from your instructions.
+        Each Agent will follow your specific requirments from your training data.
         You can generate business advisor, legal expert, sales manager, finance consultant, and etc.
         After generating your Agent, you would be able to interact with him during the call."
         

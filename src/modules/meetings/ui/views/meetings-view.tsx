@@ -26,7 +26,7 @@ const {data} = useSuspenseQuery(trpc.meetings.getMany.queryOptions({
             description="
             Welcome to Advisora.io! 
             Call your first meeting to get started. 
-            You might add specific trained Agent. Each Agent will follow your specific requirments and data from your instructions.
+            You might add specific trained Agent. Each Agent will follow your specific requirments and data from your training data.
             You can generate business advisor, legal expert, sales manager, finance consultant, and etc.
             After generating your Agent, you would be able to interact with him during the call."
             
