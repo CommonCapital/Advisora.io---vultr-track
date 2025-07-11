@@ -13,7 +13,7 @@ import { db } from "@/db";
 import { agents, meetings } from "@/db/schema";
 import {streamVideo} from "@/lib/stream-video";
 import { inngest } from "@/inngest/client";
-
+import OpenAI from "openai";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { streamChat } from "@/lib/stream-chat";
 import Groq from "groq-sdk";
@@ -80,21 +80,32 @@ const [existingMeeting] = await db.select().from(meetings).where(and(eq(meetings
     if (!existingAgent) {
         return NextResponse.json({error: "Agent not found"}, {status: 404})
     };
-console.log("🧠 Injecting Instructions:");
-console.log(existingAgent.instructions);
+
     const call = streamVideo.video.call("default", meetingId);
     console.log(" Connecting OpenAI...")
+    const openaiTestClient = new OpenAI({
+  apiKey: process.env.OPEN_AI_API_KEY!
+});
+
+try {
+  const models = await openaiTestClient.models.list();
+  console.log("✅ OpenAI Key is VALID. Available models:");
+  console.log(models.data.map(m => m.id));
+} catch (err) {
+  console.error("❌ Invalid OpenAI API key or access denied:");
+  console.error(err);
+}
     const realtimeClient = await streamVideo.video.connectOpenAi({
         call,
         openAiApiKey: process.env.OPEN_AI_API_KEY!,
-        agentUserId: existingAgent.id,
-        instructions: existingAgent.instructions || "You are a helpful consultant employee from Advisora--an AI-powered consulting firm",
-
+        agentUserId: existingAgent.id
     });
 
     realtimeClient.updateSession({
         instructions: existingAgent.instructions || "You are a helpful consultant employee from Advisora--an AI-powered consulting firm",
     });
+    console.log("🧠 Injecting Instructions:");
+console.log(existingAgent.instructions);
 console.log("✅ connectOpenAi() completed.");
 
 } else if (eventType === "call.session_participant_left") {
