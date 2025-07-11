@@ -80,19 +80,22 @@ const [existingMeeting] = await db.select().from(meetings).where(and(eq(meetings
     if (!existingAgent) {
         return NextResponse.json({error: "Agent not found"}, {status: 404})
     };
-
+console.log("🧠 Injecting Instructions:");
+console.log(existingAgent.instructions);
     const call = streamVideo.video.call("default", meetingId);
+    console.log(" Connecting OpenAI...")
     const realtimeClient = await streamVideo.video.connectOpenAi({
         call,
         openAiApiKey: process.env.OPEN_AI_API_KEY!,
         agentUserId: existingAgent.id,
-        instructions: existingAgent.instructions,
+        instructions: existingAgent.instructions || "You are a helpful consultant employee from Advisora--an AI-powered consulting firm",
 
     });
 
     realtimeClient.updateSession({
-        instructions: existingAgent.instructions,
+        instructions: existingAgent.instructions || "You are a helpful consultant employee from Advisora--an AI-powered consulting firm",
     });
+console.log("✅ connectOpenAi() completed.");
 
 } else if (eventType === "call.session_participant_left") {
     const event = payload as CallSessionParticipantLeftEvent;
