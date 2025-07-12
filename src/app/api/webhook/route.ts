@@ -101,11 +101,20 @@ try {
         agentUserId: existingAgent.id
     });
 
-    await realtimeClient.updateSession({
+
+    try {
+        await realtimeClient.updateSession({
         instructions: existingAgent.instructions || "You are a helpful consultant employee from Advisora--an AI-powered consulting firm",
+    
     });
-    console.log("🧠 Injecting Instructions:");
+console.log("🧠 Injecting Instructions:");
 console.log(existingAgent.instructions);
+} catch (error) {
+        console.error("Failed to inject instructions:", error);
+    }
+    
+    
+    
 console.log("✅ connectOpenAi() completed.");
 
 } else if (eventType === "call.session_participant_left") {
