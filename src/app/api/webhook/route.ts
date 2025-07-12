@@ -101,7 +101,7 @@ try {
         agentUserId: existingAgent.id
     });
 
-    realtimeClient.updateSession({
+    await realtimeClient.updateSession({
         instructions: existingAgent.instructions || "You are a helpful consultant employee from Advisora--an AI-powered consulting firm",
     });
     console.log("🧠 Injecting Instructions:");
