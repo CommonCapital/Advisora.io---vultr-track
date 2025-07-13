@@ -82,6 +82,7 @@ const [existingMeeting] = await db.select().from(meetings).where(and(eq(meetings
     };
 
     const call = streamVideo.video.call("default", meetingId);
+    
     console.log(" Connecting OpenAI...")
     const openaiTestClient = new OpenAI({
   apiKey: process.env.OPEN_AI_API_KEY!
@@ -95,22 +96,48 @@ try {
   console.error("❌ Invalid OpenAI API key or access denied:");
   console.error(err);
 }
-    const realtimeClient = await streamVideo.video.connectOpenAi({
+
+
+const instructions =
+  typeof existingAgent.instructions === "string"
+    ? existingAgent.instructions
+    : "You are a helpful consultant employee from Advisora--an AI-powered consulting firm";
+
+   
+
+    
+     const realtimeClient = await streamVideo.video.connectOpenAi({
         call,
         openAiApiKey: process.env.OPEN_AI_API_KEY!,
-        agentUserId: existingAgent.id
-    });
+        agentUserId: existingAgent.id,
+        systemPrompt: instructions,
+    });  
+    
+
+    
+
 
 
     try {
         await realtimeClient.updateSession({
-        instructions: existingAgent.instructions || "You are a helpful consultant employee from Advisora--an AI-powered consulting firm",
+        instructions: instructions,
     
     });
 console.log("🧠 Injecting Instructions:");
 console.log(existingAgent.instructions);
 } catch (error) {
         console.error("Failed to inject instructions:", error);
+        const channel = streamChat.channel("messaging", meetingId);
+  await channel.watch();
+
+  await channel.sendMessage({
+    text: `🧠 [System Instructions]\n${instructions}`,
+    user: {
+      id: existingAgent.id,
+      name: existingAgent.name,
+    },
+  });
+  console.log("✅ Sent instructions as a message fallback.");
     }
     
     
