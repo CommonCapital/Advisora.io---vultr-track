@@ -165,7 +165,10 @@ console.log("✅ connectOpenAi() completed.");
 
     }
 
-
+console.log("🔐 ENV DEBUG:", {
+  INNGEST_SIGNING_KEY: process.env.INNGEST_SIGNING_KEY,
+  INNGEST_ENV: process.env.INNGEST_ENV,
+});
     await db.update(meetings).set({status: "processing", endedAt: new Date()}).where(and(eq(meetings.id, meetingId), eq(meetings.status, "active")));
 } else if (eventType === "call.transcription_ready") {
     const event = payload as CallTranscriptionReadyEvent;
