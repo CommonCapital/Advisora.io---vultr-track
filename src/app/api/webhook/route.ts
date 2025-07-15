@@ -167,7 +167,7 @@ console.log("✅ connectOpenAi() completed.");
 
 console.log("🔐 ENV DEBUG:", {
   INNGEST_SIGNING_KEY: process.env.INNGEST_SIGNING_KEY,
-  INNGEST_ENV: process.env.INNGEST_ENV,
+  INNGEST_ENV: process.env.INNGEST_EVENT_KEY,
 });
     await db.update(meetings).set({status: "processing", endedAt: new Date()}).where(and(eq(meetings.id, meetingId), eq(meetings.status, "active")));
 } else if (eventType === "call.transcription_ready") {
@@ -177,9 +177,13 @@ console.log("🔐 ENV DEBUG:", {
    
 
     const [updatedMeeting] = await db.update(meetings).set({transcriptUrl: event.call_transcription.url}).where(eq(meetings.id, meetingId)).returning();
+     console.log("Transcript is passed")
       if (!updatedMeeting) {
-        return NextResponse.json({error: "Meeting not found"}, {status: 404})
+        console.error("No Transcript")
+        return NextResponse.json({error: "Meeting not found"}, {status: 404});
+        
       }
+     
 try {
       await inngest.send({
         name: "meetings/processing",
