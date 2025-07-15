@@ -180,14 +180,19 @@ console.log("🔐 ENV DEBUG:", {
       if (!updatedMeeting) {
         return NextResponse.json({error: "Meeting not found"}, {status: 404})
       }
-
+try {
       await inngest.send({
         name: "meetings/processing",
        data: {
         meetingId: updatedMeeting.id,
         transcriptUrl: updatedMeeting.transcriptUrl
        },
-      });
+      }); 
+      console.log(" Inngest function trigerred successfully with INNGEST_SIGNING_KEY and INNGEST_EVENT_KEY:", process.env.INNGEST_SIGNING_KEY, process.env.INNGEST_EVENT_KEY  );
+} catch (error) {
+    console.error("Failed to trigger Inngest function with INNGEST_SIGNING_KEY and INNGEST_EVENT_KEY: ", process.env.INNGEST_SIGNING_KEY, process.env.INNGEST_EVENT_KEY)
+}
+    
 
 } else if (eventType === "call.recording_ready") {
     const event = payload as CallRecordingReadyEvent;
