@@ -170,7 +170,9 @@ console.log("🔐 ENV DEBUG:", {
   INNGEST_ENV: process.env.INNGEST_EVENT_KEY,
 });
     await db.update(meetings).set({status: "processing", endedAt: new Date()}).where(and(eq(meetings.id, meetingId), eq(meetings.status, "active")));
+    console.log("Meeting status updated to processing");
 } else if (eventType === "call.transcription_ready") {
+    console.log("Transcription is ready");
     const event = payload as CallTranscriptionReadyEvent;
     const meetingId = event.call_cid.split(":")[1];
 
@@ -183,7 +185,12 @@ console.log("🔐 ENV DEBUG:", {
         return NextResponse.json({error: "Meeting not found"}, {status: 404});
         
       }
-     
+     console.log("🔁 Sending to Inngest:", {
+  event: "meetings/processing",
+  meetingId: updatedMeeting.id,
+  transcriptUrl: updatedMeeting.transcriptUrl,
+  INNGEST_EVENT_KEY: process.env.INNGEST_EVENT_KEY
+});
 try {
       await inngest.send({
         name: "meetings/processing",
