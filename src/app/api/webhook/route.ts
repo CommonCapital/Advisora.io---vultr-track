@@ -192,6 +192,8 @@ console.log("🔐 ENV DEBUG:", {
   INNGEST_EVENT_KEY: process.env.INNGEST_EVENT_KEY
 });
 try {
+    const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 80000);
       await inngest.send({
         name: "meetings/processing",
        data: {
