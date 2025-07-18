@@ -167,7 +167,7 @@ console.log("✅ connectOpenAi() completed.");
 
 console.log("🔐 ENV DEBUG:", {
   INNGEST_SIGNING_KEY: process.env.INNGEST_SIGNING_KEY,
-  INNGEST_ENV: process.env.INNGEST_EVENT_KEY,
+  INNGEST_EVENT_KEY: process.env.INNGEST_EVENT_KEY,
 });
     await db.update(meetings).set({status: "processing", endedAt: new Date()}).where(and(eq(meetings.id, meetingId), eq(meetings.status, "active")));
     console.log("Meeting status updated to processing");
