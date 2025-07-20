@@ -192,15 +192,18 @@ console.log("🔐 ENV DEBUG:", {
   INNGEST_EVENT_KEY: process.env.INNGEST_EVENT_KEY
 });
 try {
-    const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 80000);
+    
+  
       await inngest.send({
         name: "meetings/processing",
        data: {
         meetingId: updatedMeeting.id,
         transcriptUrl: updatedMeeting.transcriptUrl
        },
-      }); 
+       
+       
+      },
+    ); 
       console.log(" Inngest function trigerred successfully with INNGEST_SIGNING_KEY and INNGEST_EVENT_KEY:", process.env.INNGEST_SIGNING_KEY, process.env.INNGEST_EVENT_KEY  );
 } catch (error) {
     console.error("Failed to trigger Inngest function with INNGEST_SIGNING_KEY and INNGEST_EVENT_KEY: ", process.env.INNGEST_SIGNING_KEY, process.env.INNGEST_EVENT_KEY)
