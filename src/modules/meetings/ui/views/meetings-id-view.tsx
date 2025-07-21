@@ -31,8 +31,9 @@ export const MeetingIdView = ({meetingId}: Props) => {
         "This action cannot be undone.",
     );
 const removeMeeting = useMutation(trpc.meetings.remove.mutationOptions({
-    onSuccess: () => {
-        queryClient.invalidateQueries(trpc.meetings.getMany.queryOptions({}));
+    onSuccess: async () => {
+        await queryClient.invalidateQueries(trpc.meetings.getMany.queryOptions({}));
+       
         router.push('/meetings');
     },
     
