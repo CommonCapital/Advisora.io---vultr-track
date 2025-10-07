@@ -34,7 +34,7 @@ return (
         <BreadcrumbList>
          <BreadcrumbItem>
            <BreadcrumbLink asChild className="font-medium text-xl">
-            <Link href="/agents">
+            <Link href="/meetings">
                Return to
               <h5 className="font-medium text-xl text-black justify-between bg-blue-300 rounded-md hover:text-4xl">
                 My Meetings

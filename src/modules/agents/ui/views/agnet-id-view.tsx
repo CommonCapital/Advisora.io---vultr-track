@@ -28,10 +28,10 @@ const removeAgent = useMutation(
     trpc.agents.remove.mutationOptions({
         onSuccess: async () => {
            await queryClient.invalidateQueries(trpc.agents.getMany.queryOptions({}));
-           await queryClient.invalidateQueries(
-                trpc.premium.getFreeUsage.queryOptions(),
+           //await queryClient.invalidateQueries(
+           //     trpc.premium.getFreeUsage.queryOptions(),
 
-            );
+          //  );
             router.push('/agents')
         },
         onError: (error) => {
@@ -70,7 +70,7 @@ return (
             <div className="px-4 py-5 gap-y-5 flex flex-col col-span-5">
                 <div className="flex items-center gap-x-3"> 
                     <GeneratedAvatar
-                        variant="botttsNeutral"
+                        variant="initials"
                         seed={data.name}
                         className="size-10"
                     />
@@ -88,7 +88,10 @@ return (
                     <p className="text-lg font-medium">Training data</p>
                     <p className="text-neutral-800">{data.instructions}</p>
                 </div>
-
+                  <div className="flex flex-col gap-y-4">
+                    <p className="text-lg font-medium">Data Report Template</p>
+                    <p className="text-neutral-800">{data.instructions2}</p>
+                </div>
             </div>
         </div>
 

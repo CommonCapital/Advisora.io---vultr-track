@@ -15,16 +15,11 @@ meetingId: string;
 };
 const Page = async ({params}: Props) => {
   const {meetingId } = await params;
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  if (!session) {
-    redirect("/auth/sign-in");
-  };
+  
   
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(
-    trpc.meetings.getOne.queryOptions({ id: meetingId}),
+    trpc.meetings.getOnePublic.queryOptions({ id: meetingId}),
   );
 
   

@@ -1,4 +1,3 @@
-
 "use client";
 import { DataTable } from "@/components/data-table";
 import { useTRPC } from "@/trpc/client";
@@ -18,17 +17,15 @@ const {data} = useSuspenseQuery(trpc.meetings.getMany.queryOptions({
 }));
     return (
 <div className="flex-1 pb-4 px-4 md:px-4 flex flex-col gap-y-4">
-    <DataTable data={data.items} columns={columns} onRowClick={(row) => router.push(`/meetings/${row.id}`)}/>
+    <DataTable data={data.items} columns={columns} onRowClick={(row) => router.push(`/meeting-call/${row.id}`)}/>
     <DataPagination page={filters.page} totalPages={data.totalPages} onPageChange={(page) => setFilters({page})}/>
     {data.items.length === 0 && (
               <EmptyState
-               title="Generate your first consulting Agent" 
+               title="Generate your first Venture Capitalist analyst Agent" 
             description="
             Welcome to Advisora.io! 
             Call your first meeting to get started. 
-            You might add specific trained Agent. Each Agent will follow your specific requirments and data from your training data.
-            You can generate business advisor, legal expert, sales manager, finance consultant, and etc.
-            After generating your Agent, you would be able to interact with him during the call."
+            You might add specific trained Agent. Each Agent will abide to your specific data from your training data, and will be able to visit your meetings, analysize reviews, and generate reports."
             
             />)}
 </div>

@@ -10,7 +10,7 @@ export const GeneratdAvatarUri = ({seed, variant}: Props) => {
 let avatar;
 
 if (variant === "botttsNeutral") {
-    avatar = createAvatar(botttsNeutral, {seed});
+    avatar = createAvatar(initials, {seed});
 } else {
     avatar = createAvatar(initials, {seed, fontWeight: 500, fontSize: 42});
 }

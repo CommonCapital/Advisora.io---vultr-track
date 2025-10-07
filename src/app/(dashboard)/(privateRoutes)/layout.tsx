@@ -12,15 +12,18 @@ interface Props {
 
 const Layout = async ({children}:Props) => {
     
+       const session = await auth.api.getSession({
+              headers: await headers(),
+            });
+          
+            if (!session) {
+              redirect("/auth/sign-in");
+            }
     
     return (
-        <SidebarProvider>
-           <DashboardSidebar />
-           <main className="flex flex-col h-screen w-screen bg-muted">
-            <DashboardNavbar />
-            {children}
-            </main>
-        </SidebarProvider>
+       <div>
+        {children}
+       </div>
     );
 };
 export default Layout

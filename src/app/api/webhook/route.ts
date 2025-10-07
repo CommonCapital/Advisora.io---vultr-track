@@ -16,10 +16,12 @@ import { inngest } from "@/inngest/client";
 import OpenAI from "openai";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { streamChat } from "@/lib/stream-chat";
-import Groq from "groq-sdk";
 
 
-const groq = new Groq({apiKey: process.env.GROQ_API_KEY!});
+
+const openai = new OpenAI({
+  apiKey: process.env.OPEN_AI_API_KEY!
+});
 
 
 function verifySignatureWithSDK(body: string, signature: string): boolean{
@@ -101,13 +103,14 @@ try {
 const instructions =
   typeof existingAgent.instructions === "string"
     ? existingAgent.instructions
-    : "You are a helpful consultant employee from Advisora--an AI-powered consulting firm";
+    : "You are a rational and critical Venture Capitalist analyst. You should review the pitch and coldy, mathematically evaluate the startup.";
 
    
 
     
      const realtimeClient = await streamVideo.video.connectOpenAi({
         call,
+        model: "gpt-4o-realtime-preview",
         openAiApiKey: process.env.OPEN_AI_API_KEY!,
         agentUserId: existingAgent.id,
         systemPrompt: instructions,
@@ -271,21 +274,18 @@ try {
             content: message.text || "",
         }));
         try {
-    const chatCompletion = await groq.chat.completions.create({
-           messages: [
-    { role: "system", content: instructions }, // optional system message
-    ...previousMessages,                      // <- previous context
-    { role: "user", content: text }           // <- current message
-  ],
-        model: "meta-llama/llama-4-scout-17b-16e-instruct",
+   const chatCompletion = await openai.chat.completions.create({
+        model: "chatgpt-4o-latest",
+        messages: [
+            { role: "system", content: instructions, ...previousMessages },
+            { role: "user", content: text },
+        ],
+       
         temperature: 1,
-        max_completion_tokens: 1024,
         top_p: 1,
         stream: true,
-        stop: null
     });
-
-    let fullResponse = "";
+   let fullResponse = "";
 
     for await (const chunk of chatCompletion) {
         const token = chunk.choices?.[0]?.delta?.content || "";
@@ -294,7 +294,7 @@ try {
 
     const avatarUrl = GeneratdAvatarUri({
         seed: existingAgent.name,
-        variant: "botttsNeutral",
+        variant: "initials",
     });
 
     await streamChat.upsertUser({

@@ -1,4 +1,4 @@
-import { createTRPCRouter, premiumProcedure, protectedProcedure } from "@/trpc/init";
+import { baseProcedure, createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { db } from "@/db";
 import { agents, meetings, user } from "@/db/schema";
 import { TRPCError } from "@trpc/server";
@@ -158,7 +158,7 @@ return transcriptWithSpeakers;
       }
       return updatedMeeting;
     }),
-  create: premiumProcedure("meetings")
+  create: protectedProcedure
     .input(meetingsInsertSchema)
     .mutation(async ({ input, ctx }) => {
       const [createdMeeting] = await db
@@ -228,6 +228,31 @@ return transcriptWithSpeakers;
         .innerJoin(agents, eq(meetings.agentId, agents.id))
         .where(
           and(eq(meetings.id, input.id), eq(meetings.userId, ctx.auth.user.id))
+        );
+      if (!existingMeeting) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+        });
+      }
+      //await new Promise((resolve) => setTimeout(resolve, 5000))
+      //throw new TRPCError({code: "BAD_REQUEST"})
+      return existingMeeting;
+    }),
+     getOnePublic: baseProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input }) => {
+      const [existingMeeting] = await db
+        .select({
+          ...getTableColumns(meetings),
+          agent: agents,
+          duration: sql<number>`EXTRACT(EPOCH FROM (ended_at - started_at))`.as(
+            "duration"
+          ),
+        })
+        .from(meetings)
+        .innerJoin(agents, eq(meetings.agentId, agents.id))
+        .where(
+          and(eq(meetings.id, input.id))
         );
       if (!existingMeeting) {
         throw new TRPCError({

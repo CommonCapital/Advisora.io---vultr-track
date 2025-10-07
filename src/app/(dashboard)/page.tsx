@@ -1,11 +1,11 @@
 
-import { Homeview } from "@/modules/home/ui/views/home-view"
+import App from "@/modules/home/ui/views/home-view"
 
 
 const Page = async () =>  {
   
   return (
-<Homeview />
+<App />
   )
 }
 export default Page;

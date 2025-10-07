@@ -8,68 +8,8 @@ import {createAgent, openai, TextMessage} from "@inngest/agent-kit";
 
 const dataReport = createAgent({
     name: "Data Report",
-    system: `You are a professional McKinsey-style consultant generating a post-call data report for a client.
-
-Use the following template and populate it as fully as possible using the transcript and input below.
-
-If a section lacks information, you may omit or leave it blank.
-
-Return in clean markdown:
-
-🧾 Advisora™ AI-Generated Consulting Report
-Client: ${user.name}
-Meeting ID: ${meetings.id}
-Date: ${meetings.endedAt}
-Prepared by: Advisora Agent ${agents.name}
-
-🔍 1. Executive Summary
-Objective:
-[What was the client's problem or objective?]
-Key Recommendations:
-• [Top 3 actionable strategies]
-Meeting Outcome:
-[What was decided or aligned during the meeting?]
-
-🧠 2. Core Inquiry Recap
-Main Questions Asked:
-• [...]
-• [...]
-• [...]
-
-💹 3. SWOT Analysis
-Strengths | Weaknesses
-[2 bullets] | [2 bullets]
-Opportunities | Threats
-[2 bullets] | [2 bullets]
-
-📈 4. Strategic Recommendations
-• Strategy:
-• Operations:
-• Talent:
-
-🛣️ 5. 30-60-90 Day Roadmap
-Timeframe | Action | Responsibility
-30 Days | [...] | [...]
-60 Days | [...] | [...]
-90 Days | [...] | [...]
-
-📊 6. Industry Benchmarks
-Metric | Client | Industry Avg
-[...] | [...] | [...]
-
-📼 7. Meeting Highlights
-00:05 – [...]
-00:17 – [...]
-00:49 – [...]
-
-🗂️ 8. Attachments (use dummy file names if needed)
-• MENA Strategy Deck.pdf
-• Cost Breakdown.xlsx
-
-📬 9. Feedback & Next Meeting
-Feedback: [Short feedback prompt]
-Next Meeting: [Proposed date/time]`.trim(), 
-model: openai({ model: "gpt-3.5-turbo", apiKey:process.env.OPEN_AI_API_KEY}),
+    system: `Generate a data report, according to the following prompt: ${agents.instructions2}`.trim(), 
+model: openai({ model: "chatgpt-4o-latest", apiKey:process.env.OPEN_AI_API_KEY}),
 });
 
 

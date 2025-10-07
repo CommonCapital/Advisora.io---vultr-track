@@ -24,7 +24,7 @@ export const MeetingIdView = ({meetingId}: Props) => {
     const [updateMeetingDialogOpen, setUpdateMeetingDialogOpen] = useState(false);
 
     const {data} = useSuspenseQuery(
-        trpc.meetings.getOne.queryOptions({ id: meetingId})
+        trpc.meetings.getOnePublic.queryOptions({ id: meetingId})
     );
     const [RemoveConfirmation, confirmRemove] = useConfirm(
         "Are you sure you want to remove this meeting?",

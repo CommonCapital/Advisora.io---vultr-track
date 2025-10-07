@@ -12,6 +12,13 @@ interface Props {
 
 const Layout = async ({children}:Props) => {
     
+       const session = await auth.api.getSession({
+              headers: await headers(),
+            });
+          
+            if (!session) {
+              redirect("/auth/sign-in");
+            }
     
     return (
         <SidebarProvider>

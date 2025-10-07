@@ -12,8 +12,8 @@ interface Props {
 
 export const CallView = ({meetingId}: Props) => {
     const trpc = useTRPC();
-    const {data} = useSuspenseQuery(trpc.meetings.getOne.queryOptions({id: meetingId}));
-
+    const {data} = useSuspenseQuery(trpc.meetings.getOnePublic.queryOptions({id: meetingId}));
+ 
     if (data.status === "completed") {
         return (
             <div className="flex h-screen items-center justify-center">

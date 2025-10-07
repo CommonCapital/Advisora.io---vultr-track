@@ -13,15 +13,16 @@ interface Props {
 
 const Page = async ({params}: Props) =>{
     const {meetingId}  = await params;
-    const session = await auth.api.getSession({
+    
+  const session = await auth.api.getSession({
         headers: await headers(),
-    });
-    if (!session) {
+      });
+    
+      if (!session) {
         redirect("/auth/sign-in");
-    }
-
+      }
 const queryClient = getQueryClient();
-void queryClient.prefetchQuery(trpc.meetings.getOne.queryOptions({id: meetingId}));
+void queryClient.prefetchQuery(trpc.meetings.getOnePublic.queryOptions({id: meetingId}));
 
 return (
     <HydrationBoundary state={dehydrate(queryClient)}>
