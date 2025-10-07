@@ -18,6 +18,8 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import { useSidebar } from '@/components/ui/sidebar';
+import Link from 'next/link';
 
 // --- Utility Components ---
 
@@ -65,6 +67,7 @@ const App: React.FC = () => {
     </div>
   );
 const router = useRouter();
+ const { state, toggleSidebar, isMobile } = useSidebar();
   return (
     <div className="min-h-screen bg-gray-900 text-white font-inter">
       {/* Dynamic Background Grid and Lights */}
@@ -87,9 +90,9 @@ const router = useRouter();
               <a href="#features" className="hover:text-white transition">Platform Edge</a>
               <a href="#founders" className="hover:text-white transition">Team</a>
               <a href="#" className="py-2 px-4 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-semibold transition">
-               <Button onClick={() => router.push('/auth/sign-in')} >
+               <Link href="/agents" >
                 Start
-               </Button>
+               </Link>
               </a>
             </nav>
           </div>
@@ -113,7 +116,8 @@ const router = useRouter();
 
             <div className="space-x-4">
               <a href="#" className="inline-flex items-center justify-center py-4 px-8 rounded-xl font-bold text-lg bg-blue-600 hover:bg-blue-500 text-white transition duration-300 shadow-xl shadow-blue-900/50">
-                Start AI Diligence Pilot <Zap className="w-5 h-5 ml-2" />
+               <Link href="/agents">Start AI Diligence Pilot <Zap className="w-5 h-5 ml-2" /></Link> 
+                
               </a>
             </div>
           </div>
