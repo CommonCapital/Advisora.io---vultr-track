@@ -46,7 +46,7 @@ const firstSection = [
 const secondSection = [
   {
     icon: Settings,
-    label: "Seetings",
+    label: "Settings",
     href: "/settings",
   },
 ];
