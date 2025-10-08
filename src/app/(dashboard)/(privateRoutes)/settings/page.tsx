@@ -28,7 +28,7 @@ const Page = async() => {
      <HydrationBoundary state={dehydrate(queryClient)}>
        <Suspense fallback={<LoadingPage />}>
         <ErrorBoundary fallback={<ErrorPage />}>
-            <UpgradeView />
+            Settings
         </ErrorBoundary>
        </Suspense>
      </HydrationBoundary>
