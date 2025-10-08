@@ -127,9 +127,19 @@ const instructions =
     
     });
 console.log("🧠 Injecting Instructions:");
+const channel = streamChat.channel("messaging", meetingId);
+  await channel.watch();
 console.log(existingAgent.instructions);
+ await channel.sendMessage({
+    text: `🧠 [System Instructions]\n${instructions}`,
+    user: {
+      id: existingAgent.id,
+      name: existingAgent.name,
+    }
+});
 } catch (error) {
         console.error("Failed to inject instructions:", error);
+
         const channel = streamChat.channel("messaging", meetingId);
   await channel.watch();
 
@@ -138,7 +148,7 @@ console.log(existingAgent.instructions);
     user: {
       id: existingAgent.id,
       name: existingAgent.name,
-    },
+    }
   });
   console.log("✅ Sent instructions as a message fallback.");
     }
