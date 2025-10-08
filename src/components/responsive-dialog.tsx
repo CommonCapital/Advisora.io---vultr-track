@@ -25,11 +25,11 @@ if (isMobile) {
     return (
         <Drawer open={open} onOpenChange={onOpenChange}>
             <DrawerContent className="max-h-[90vh] overflow-y-auto">
-                <DrawerHeader>
-                    <DrawerTitle>{title}</DrawerTitle>
-                    <DrawerDescription>{description}</DrawerDescription>
+                <DrawerHeader className="max-h-[90vh] overflow-y-auto">
+                    <DrawerTitle className="max-h-[90vh] overflow-y-auto">{title}</DrawerTitle>
+                    <DrawerDescription className="max-h-[90vh] overflow-y-auto">{description}</DrawerDescription>
                 </DrawerHeader>
-                <div className="p-4">
+                <div className="p-4 max-h-[90vh] overflow-y-auto">
                     {children}
                 </div>
             </DrawerContent>
