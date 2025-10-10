@@ -122,7 +122,7 @@ const Page =  () =>  {
                   <div className="relative mt-8 lg:mt-0 animate-fade-in">
                     <div className="absolute inset-0 bg-gradient-blue blur-3xl opacity-20 rounded-full"></div>
                     <img 
-                      src={'/hero-mockup.png'} 
+                      src={'/Pitch-review.png'} 
                       alt="Advisora AI Dashboard showing deal evaluation and analytics"
                       className="relative rounded-2xl shadow-2xl border border-border hover:scale-[1.02] transition-transform duration-300"
                     />
