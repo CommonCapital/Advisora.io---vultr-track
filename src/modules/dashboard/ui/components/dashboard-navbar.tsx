@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/components/ui/sidebar";
 import {
   
+  Menu,
   PanelLeftCloseIcon,
   PanelLeftIcon,
   SearchIcon,
+  Settings2Icon,
 } from "lucide-react";
 import { DashboardCommand } from "./dashboard-command";
 import { useEffect, useState } from "react";
@@ -28,12 +30,13 @@ export const DashboardNavbar = () => {
   return (
     <>
       <DashboardCommand open={commandOpen} setOpen={setCommandOpen} />
-      <nav className="flex px-4 gap-x-2 items-center py-3 border-b bg-background">
+      
+      <nav className="flex items-center top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <Button className="size-9" variant={"outline"} onClick={toggleSidebar}>
           {state === "collapsed" || isMobile ? (
-            <PanelLeftIcon className="size-4" />
+            <Menu className="size-4" />
           ) : (
-            <PanelLeftCloseIcon className="size-4" />
+            <Menu className="size-4" />
           )}
         </Button>
 
@@ -46,6 +49,7 @@ export const DashboardNavbar = () => {
           <SearchIcon />
           Search...
         </Button>
+        
       </nav>
     </>
   );
