@@ -348,20 +348,7 @@ const Page =  () =>  {
                       </Button>
                     </div>
                     
-                    <div className="pt-6 sm:pt-8 grid grid-cols-3 gap-4 sm:gap-8 text-xs sm:text-sm">
-                      <div>
-                        <div className="font-semibold text-xl sm:text-2xl"> Attracting $500K</div>
-                        <div className="text-white/70 text-xs sm:text-sm">For Seed Round</div>
-                      </div>
-                      <div className="border-l border-white/20 pl-4">
-                        <div className="font-semibold text-xl sm:text-2xl">10+ Pilots</div>
-                        <div className="text-white/70 text-xs sm:text-sm">In Progress</div>
-                      </div>
-                      <div className="border-l border-white/20 pl-4">
-                        <div className="font-semibold text-xl sm:text-2xl">MVP Shipped</div>
-                        <div className="text-white/70 text-xs sm:text-sm">Ready to Scale</div>
-                      </div>
-                    </div>
+                   
                   </div>
                 </div>
               </div>
