@@ -113,7 +113,6 @@ const instructions =
         model: "gpt-4o-realtime-preview",
         openAiApiKey: process.env.OPEN_AI_API_KEY!,
         agentUserId: existingAgent.id,
-        systemPrompt: instructions,
     });  
     
 
