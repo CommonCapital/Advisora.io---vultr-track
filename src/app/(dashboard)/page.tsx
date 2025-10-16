@@ -46,10 +46,7 @@ const Page = () => {
                     <path d="M4 22L16 28L28 22" className="stroke-primary" strokeWidth="2" strokeLinecap="round"/>
                   </svg>
                   <span className="text-lg sm:text-xl font-semibold text-black">Advisora</span>
-                  <span className="text-xs sm:text-sm font-medium text-gray-700 ">founded by</span>
-
-                  <Link  className="secondary text-lg sm:text-xl font-semibold" href="https://musedata.ai/">MuseData.ai's</Link>
-                  <span  className="text-xs sm:text-sm font-medium text-gray-700 ">team</span>
+                 
                 </motion.div>
                 
                 <motion.div 
@@ -118,7 +115,12 @@ const Page = () => {
                     >
                       <span className="text-xs sm:text-sm font-medium text-primary bg-primary/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
                         AI OS for Venture Capital
+                        
                       </span>
+                       <span className="text-xs sm:text-sm font-medium text-gray-700 ">founded by</span>
+
+                  <Link  className="secondary text-lg sm:text-xl font-semibold" href="https://musedata.ai/">MuseData.ai's</Link>
+                  <span  className="text-xs sm:text-sm font-medium text-gray-700 ">team</span>
                     </motion.div>
                     
                     <motion.h1 
