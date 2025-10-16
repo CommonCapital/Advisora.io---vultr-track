@@ -118,8 +118,9 @@ const Page = () => {
                         
                       </span>
                        <span className="text-xs sm:text-sm font-medium text-gray-700 ">founded by</span>
-
+{" "}
                   <Link  className="secondary text-lg sm:text-xl font-semibold" href="https://musedata.ai/">MuseData.ai's</Link>
+                  {" "}
                   <span  className="text-xs sm:text-sm font-medium text-gray-700 ">team</span>
                     </motion.div>
                     
