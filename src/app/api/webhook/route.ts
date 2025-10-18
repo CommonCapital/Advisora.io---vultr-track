@@ -85,9 +85,7 @@ const [existingMeeting] = await db.select().from(meetings).where(and(eq(meetings
 
     const call = streamVideo.video.call("default", meetingId);
     {/**Adding new features */}
-    await call.startTranscription();
-    await call.startRecording();
-    await call.listTranscriptions();
+   
     console.log(" Connecting OpenAI...")
     const openaiTestClient = new OpenAI({
   apiKey: process.env.OPEN_AI_API_KEY!
@@ -139,6 +137,9 @@ console.log(existingAgent.instructions);
       name: existingAgent.name,
     }
 });
+ await call.startTranscription();
+    await call.startRecording();
+    await call.listTranscriptions();
 } catch (error) {
         console.error("Failed to inject instructions:", error);
 
