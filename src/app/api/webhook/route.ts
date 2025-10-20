@@ -122,7 +122,7 @@ const instructions =
 
 
     try {
-        await realtimeClient.updateSession({
+        realtimeClient.updateSession({
         instructions: instructions,
     
     });

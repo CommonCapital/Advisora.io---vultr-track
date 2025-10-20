@@ -206,7 +206,7 @@ return transcriptWithSpeakers;
           role: "user",
           image: GeneratdAvatarUri({
             seed: existingAgent.name,
-            variant: "botttsNeutral",
+            variant: "initials",
           }),
         },
       ]);
