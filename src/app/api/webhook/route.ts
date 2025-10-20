@@ -160,7 +160,7 @@ console.log("Sent instructions as a messega")
       name: existingAgent.name,
     }
   });
-  console.log("✅ Sent instructions as a message fallback.");
+  console.log("✅ Sent instructions as a messages fallback.");
     }
     
     
