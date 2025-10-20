@@ -84,7 +84,7 @@ const [existingMeeting] = await db.select().from(meetings).where(and(eq(meetings
     };
 
     const call = streamVideo.video.call("default", meetingId);
-    {/**Adding new features */}
+   
    
     console.log(" Connecting OpenAI...")
     const openaiTestClient = new OpenAI({
@@ -127,19 +127,26 @@ const instructions =
     
     });
 console.log("🧠 Injecting Instructions:");
-const channel = streamChat.channel("messaging", meetingId);
-  await channel.watch();
-console.log(existingAgent.instructions);
- await channel.sendMessage({
-    text: `🧠 [System Instructions]\n${instructions}`,
-    user: {
-      id: existingAgent.id,
-      name: existingAgent.name,
-    }
+// ✅ Create or get the channel and include `created_by_id`
+const channel = streamChat.channel("messaging", meetingId, {
+  created_by_id: existingAgent.id, // 👈 REQUIRED for server-side auth
+  members: [existingAgent.id],     // optional, but good practice
 });
- await call.startTranscription();
-    await call.startRecording();
-    await call.listTranscriptions();
+
+await channel.watch();
+
+// ✅ Now safe to send a message
+console.log(existingAgent.instructions);
+
+await channel.sendMessage({
+  text: `🧠 [System Instructions]\n${instructions}`,
+  user: {
+    id: existingAgent.id,
+    name: existingAgent.name,
+  },
+});
+console.log("Sent instructions as a messega")
+ 
 } catch (error) {
         console.error("Failed to inject instructions:", error);
 
