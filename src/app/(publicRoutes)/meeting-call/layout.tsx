@@ -15,12 +15,10 @@ const Layout = async ({children}:Props) => {
     
     return (
        
-           
            <div >
-           
             {children}
-            </div>
+           </div>
         
-    );
+           );
 };
 export default Layout

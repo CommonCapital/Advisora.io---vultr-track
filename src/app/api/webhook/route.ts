@@ -117,10 +117,6 @@ const instructions =
     });  
     
 
- realtimeClient.on("session.update", (event: unknown) => {
-    console.log("Realtime session update:", event);
-  });
-
     try {
         realtimeClient.updateSession({
         instructions: instructions,
