@@ -111,9 +111,10 @@ const instructions =
     
      const realtimeClient = await streamVideo.video.connectOpenAi({
         call,
-        model: "gpt-4o-realtime-preview",
-        openAiApiKey: process.env.OPEN_AI_API_KEY!,
+        openAiApiKey: process.env.OPENAI_API_KEY!,
         agentUserId: existingAgent.id,
+        
+
     });  
     
 
