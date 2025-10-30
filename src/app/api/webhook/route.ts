@@ -27,7 +27,30 @@ const openai = new OpenAI({
 function verifySignatureWithSDK(body: string, signature: string): boolean{
     return streamVideo.verifyWebhook(body, signature);
 }
+// ----------------------------------------------------
+// Setup realtime client: add tools, log events, etc.
+// ----------------------------------------------------
+async function setupRealtimeClient(realtimeClient: any) {
+  // Log essential events
+  realtimeClient.on("error", (event:any)=> console.error("❌ Realtime Error:", event));
+  realtimeClient.on("session.update", (event:any) => console.log("🔄 Session update:", event));
+  realtimeClient.on("close", () => console.warn("⚠️ Realtime connection closed."));
+  realtimeClient.on("transcript", (data:any) => console.log("🗣️ Transcript event:", data));
+  realtimeClient.on("audio.start", () => console.log("🎤 Audio output started"));
+  realtimeClient.on("audio.end", () => console.log("🔇 Audio output ended"));
 
+  // Add a simple tool to keep session active (this helps model stay responsive)
+  realtimeClient.addTool(
+    {
+      name: "heartbeat",
+      description: "Keep the AI session active and responsive.",
+      parameters: { type: "object", properties: {} },
+    },
+    async () => ({ ok: true })
+  );
+
+  console.log("✅ Realtime client setup complete.");
+}
 export async function POST(req: NextRequest) {
     console.log("Webhook received");
     const signature = req.headers.get("x-signature");
@@ -88,7 +111,7 @@ const [existingMeeting] = await db.select().from(meetings).where(and(eq(meetings
    
     console.log(" Connecting OpenAI...")
     const openaiTestClient = new OpenAI({
-  apiKey: process.env.OPEN_AI_API_KEY!
+  apiKey: process.env.OPENAI_API_KEY!
 });
 
 try {
@@ -113,13 +136,16 @@ const instructions =
         call,
         openAiApiKey: process.env.OPENAI_API_KEY!,
         agentUserId: existingAgent.id,
+        model: "gpt-4o-realtime-preview-2024-10-01",
         
 
     });  
-    
 
+    console.log("conntectOpenAI() success:", realtimeClient)
+    await setupRealtimeClient(realtimeClient);
+console.log("✅ Realtime client setup complete.");
     try {
-        realtimeClient.updateSession({
+       await realtimeClient.updateSession({
         instructions: instructions,
     
     });
@@ -134,15 +160,18 @@ await channel.watch();
 
 // ✅ Now safe to send a message
 console.log(existingAgent.instructions);
-
-await channel.sendMessage({
-  text: `🧠 [System Instructions]\n${instructions}`,
-  user: {
-    id: existingAgent.id,
-    name: existingAgent.name,
-  },
+// 🗣️ Trigger AI to speak (optional greeting or first question)
+await realtimeClient.realtime.send({
+  type: "response.create",
+  response: {
+    instructions: "Hello! I’m your VC analyst. What problem are you solving?",
+    modalities: ["text", "audio"],
+    conversation: true
+  }
 });
-console.log("Sent instructions as a messega")
+console.log("🎤 AI speech response triggered");
+
+
  
 } catch (error) {
         console.error("Failed to inject instructions:", error);
