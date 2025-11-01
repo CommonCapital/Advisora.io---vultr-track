@@ -39,15 +39,8 @@ async function setupRealtimeClient(realtimeClient: any) {
   realtimeClient.on("audio.start", () => console.log("🎤 Audio output started"));
   realtimeClient.on("audio.end", () => console.log("🔇 Audio output ended"));
 
-  // Add a simple tool to keep session active (this helps model stay responsive)
-  realtimeClient.addTool(
-    {
-      name: "heartbeat",
-      description: "Keep the AI session active and responsive.",
-      parameters: { type: "object", properties: {} },
-    },
-    async () => ({ ok: true })
-  );
+  
+
 
   console.log("✅ Realtime client setup complete.");
 }
