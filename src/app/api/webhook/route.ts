@@ -88,20 +88,21 @@ const [existingMeeting] = await db.select().from(meetings).where(and(eq(meetings
 
     const call = streamVideo.video.call("default", meetingId);
    
-   
-    console.log(" Connecting OpenAI...")
-    const openaiTestClient = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!
+// Ensure call exists and add AI agent as a participant
+await call.getOrCreate({
+  data: {
+    custom: { meetingId },
+    members: [
+      { user_id: existingAgent.id, role: "admin" },
+    ],
+  },
 });
 
-try {
-  const models = await openaiTestClient.models.list();
-  console.log("✅ OpenAI Key is VALID. Available models:");
-  console.log(models.data.map(m => m.id));
-} catch (err) {
-  console.error("❌ Invalid OpenAI API key or access denied:");
-  console.error(err);
-}
+console.log(`🤖 Agent ${existingAgent.name} joined call ${meetingId}`);
+   
+    
+
+
 
 
 const instructions =
@@ -114,9 +115,10 @@ const instructions =
     
      const realtimeClient = await streamVideo.video.connectOpenAi({
         call,
+        
         openAiApiKey: process.env.OPENAI_API_KEY!,
         agentUserId: existingAgent.id,
-        model: "gpt-4o-realtime-preview-2024-10-01",
+        
         
 
     });  
@@ -141,15 +143,6 @@ await channel.watch();
 // ✅ Now safe to send a message
 console.log(existingAgent.instructions);
 // 🗣️ Trigger AI to speak (optional greeting or first question)
-await realtimeClient.realtime.send({
-  type: "response.create",
-  response: {
-    instructions: "Hello! I’m your VC analyst. What problem are you solving?",
-    modalities: ["text", "audio"],
-    conversation: true
-  }
-});
-console.log("🎤 AI speech response triggered");
 
 
  
@@ -182,8 +175,7 @@ console.log("✅ connectOpenAi() completed.");
         return NextResponse.json({error: "Missing meetingID"}, {status: 400});
     }
 
-    const call = streamVideo.video.call("default", meetingId);
-    await call.end();
+    
 } else if (eventType === "call.session_ended") {
     const event = payload as CallEndedEvent;
     const meetingId = event.call.custom?.meetingId;
