@@ -104,7 +104,7 @@ export const CompletedState = ({data}: Props) =>  {
                      className="flex items-center gap-x-2 underline underline-offset-4 capitalize"
                     >
                       <GeneratedAvatar
-                      variant="botttsNeutral"
+                      variant="initials"
                       seed={data.agent.name}
                       className="size-7"
                       />
