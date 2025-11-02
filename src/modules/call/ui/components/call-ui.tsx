@@ -7,6 +7,7 @@ import { useState } from "react";
 import { CallLobby } from "./call-lobby";
 import { CallActive } from "./call-active";
 import { CallEnded } from "./call-ended";
+import { redirect } from "next/navigation";
 
 
 
@@ -35,6 +36,7 @@ const handleLeave = () => {
    if (!call) return;
 
    call.leave()
+   redirect("/meetings");
 }
  return (
     <StreamTheme className="h-full">
