@@ -38,10 +38,12 @@ const DisabledVideoPreview = () => {
 };
 
 const AllowBrowserPermissions = () => {
-    <p className="text-sm">
-       "Allow your Browser an access to your camera and microphone."
+  return (
+    <p className="text-sm text-muted-foreground text-center px-4">
+      Allow your browser access to your camera and microphone.
     </p>
-}
+  );
+};
 
 export const CallLobby = ({onJoin}: Props) => {
 const {useCameraState, useMicrophoneState} = useCallStateHooks();
