@@ -14,13 +14,13 @@ interface Props {
 const Page = async ({params}: Props) =>{
     const {meetingId}  = await params;
     
-  //const session = await auth.api.getSession({
-  //      headers: await headers(),
-  //    });
+  const session = await auth.api.getSession({
+        headers: await headers(),
+      });
     
-   //   if (!session) {
-    //    redirect("/auth/sign-in");
-    //  }
+      if (!session) {
+       redirect("/auth/sign-in");
+     }
 const queryClient = getQueryClient();
 void queryClient.prefetchQuery(trpc.meetings.getOnePublic.queryOptions({id: meetingId}));
 
