@@ -41,7 +41,7 @@ export const CallActive = ({onEnd, onLeave, meetingName}: Props) => {
       </div>
 
       <button
-        onClick={onLeave}
+        onClick={onEnd}
         className="p-2.5 rounded-xl bg-red-500/20 border border-red-500/30 text-white hover:bg-red-500/30 active:scale-95 transition-all duration-200"
         aria-label="Leave meeting"
       >
@@ -64,7 +64,7 @@ export const CallActive = ({onEnd, onLeave, meetingName}: Props) => {
     <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 w-[94%] max-w-md">
       <div className="bg-black/50 backdrop-blur-2xl rounded-3xl border border-white/10 p-4 shadow-2xl">
         <div className="flex justify-center gap-4 [&>button]:w-16 [&>button]:h-16 [&>button]:rounded-2xl [&>button]:flex [&>button]:items-center [&>button]:justify-center [&>button]:bg-white/10 [&>button]:backdrop-blur-xl [&>button]:text-white [&>button]:transition-all [&>button]:active:scale-95 hover:[&>button]:bg-white/20">
-          <CallControls onLeave={onLeave} onEnd={onEnd} />
+          <CallControls onLeave={onLeave} />
         </div>
       </div>
     </div>
