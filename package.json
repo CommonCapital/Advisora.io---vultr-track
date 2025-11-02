@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "standalone-ui": "node ./standalone.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

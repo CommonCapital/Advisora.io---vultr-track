@@ -61,7 +61,7 @@ export const CallActive = ({onEnd, onLeave, meetingName}: Props) => {
       <div className="absolute inset-0 pt-24 pb-36 px-3 flex items-center justify-center">
         <div className="w-full max-w-4xl h-full rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-black/20 backdrop-blur-sm relative">
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none"></div>
-          <PaginatedGridLayout />
+          <SpeakerLayout />
         </div>
       </div>
 
