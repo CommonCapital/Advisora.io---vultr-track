@@ -88,9 +88,9 @@ const [existingMeeting] = await db.select().from(meetings).where(and(eq(meetings
 
     const call = streamVideo.video.call("default", meetingId);
    
-// Ensure call exists and add AI agent as a participant
 await call.getOrCreate({
   data: {
+    created_by_id: existingAgent.id, // 👈 REQUIRED
     custom: { meetingId },
     members: [
       { user_id: existingAgent.id, role: "admin" },
