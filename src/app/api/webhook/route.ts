@@ -20,7 +20,7 @@ import { streamChat } from "@/lib/stream-chat";
 
 
 const openai = new OpenAI({
-  apiKey: process.env.OPEN_AI_API_KEY!
+  apiKey: process.env.OPENAI_API_KEY!
 });
 
 
